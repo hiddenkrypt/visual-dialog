@@ -12,7 +12,7 @@
     }
   ],
   "esmodules": [
-    ""
+    "visualDialog.js"
   ],
   "styles": [
     "styles/fonts.css"

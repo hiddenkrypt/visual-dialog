@@ -1,0 +1,63 @@
+div{ color:#fff}
+#avd_container{
+  color: #fff;
+}
+#avatarLeft,#avatarRight{
+  width: 18%;
+  z-index: 10;
+  border-radius: 5%;
+  top:10%;
+  opacity:0;
+}
+
+#avatarLeft,#avatarRight,#titleLeft, #titleRight{
+  position: absolute;
+}
+#avatarLeft{
+  left: 2%;
+}
+#avatarRight{
+  left: 80%;
+}
+#titleLeft{
+  left: 20%;
+  rotate: -8deg;
+}
+#titleRight{
+  left: 50%;
+  rotate: 8deg;
+}
+#titleLeft, #titleRight{
+  top:23vw;
+  z-index:15;
+  font-size: 2.5vw;
+  background-color:rgba(0,0,0,.6);
+  box-shadow: 0 0 10px 5px rgba(0,0,0,.6);
+  padding-left: .5em;
+  padding-right: .5em;
+  opacity:0; 
+}
+
+#dialogContainer{
+  font-size: 2vw;
+  background-color: rgba(0,0,0,.4);
+  height: 5px;
+  width: 5px;
+  opacity:0;
+  left: 15%;
+  top: 33%;
+  z-index: 5;
+  position: absolute;
+  padding-left: 5.8vw;
+  padding-right: 5.8vw;
+  padding-top: .3vw;
+  padding-bottom: .3vw;
+  overflow:hidden;
+  display: flex;
+  align-items: center;
+}
+#dialog{
+  overflow:hidden;
+  font-size: 2vw;
+  opacity: 0;
+}

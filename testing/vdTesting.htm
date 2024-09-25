@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../styles/avd_style.css">
+    <script src="test.js"></script>
+    <script src="../src/avd_animations.js"></script>
+    <script src="../visualDialog.js"></script>
+    <style>
+      body{ 
+        background-color:#000;
+        background-image: url("bg.webp");
+        background-size: cover;
+        
+      }
+      #controls{
+        color:#fff;
+        position:absolute;
+        bottom:0;
+        right:0;
+      }
+    </style>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="controls">
+      <div>
+        <input id="scriptPlay" type="button" value="Play">
+        <input id="step" type="button" value="Step">
+        <input id="stepBack" type="button" value="Step Back">
+        <br>
+        <textarea id="scriptText">
+        </textarea>
+      </div>
+      <div>
+        <input id="say" type="button" value="Say">
+        <br>
+        <textarea id="testText">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </textarea>
+      </div>
+      <div>
+        <input id="startLeft" type="button" value="Start left">
+        <input id="startRight" type="button" value="Start right">
+      </div>
+      <div>
+        <input id="endLeft" type="button" value="End left">
+        <input id="endRight" type="button" value="End right">
+      </div>
+  </body>
+</html>
