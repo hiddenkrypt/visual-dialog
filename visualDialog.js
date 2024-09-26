@@ -1,9 +1,11 @@
 function VisualDialog() {
-  console.log(avd_animations);
-  let avdState = {
-    characterLeft: false,
-    characterRight: false,
-    textbox: false
+
+  let avd_state = {
+    left: null,
+    right: null,
+    scriptBehind: null,
+    scriptAhead: null,
+    fileroot: ""
   }
   let avd_elements;
   let avd_container = document.createElement("div");
@@ -35,7 +37,7 @@ function VisualDialog() {
   }
   this.showCharacter = function( characterName, characterImage, side ){
     console.log(`showCharacter() ${characterName}, ${side}, ${characterImage}`);
-    let anim = avd_animations[side+"Avatar"].appear;
+    let anim = avd_animations[side+"Avatar"].show;
     let avatar;
     let title;
     if(side=="left"){
@@ -48,26 +50,46 @@ function VisualDialog() {
     title.innerHTML = characterName;
     avatar.src = `${characterImage}`;
     avatar.animate(anim.a, anim.t) 
-    anim = avd_animations[side+"Title"].appear;
+    anim = avd_animations[side+"Title"].show;
     title.animate(anim.a, anim.t) 
     
   }
   this.showDialog = function( dialogText ){
-    let anim = avd_animations.textBox.appear;
+    let anim = avd_animations.textBox.show;
     avd_elements.dialogContainer.animate(anim.a, anim.t);
-    anim = avd_animations.dialog.appear;
+    anim = avd_animations.dialog.show;
     avd_elements.dialog.animate(anim.a, anim.t);
-    avd_elements.dialog.innerHTML = dialogText;
+    
   }
-  this.playLine = function( character, txt){
-  
-  
-  }
-  this.exitCharacter = function( side ){
-    if(side=="left"){
+  this.exitCharacter = function( name ){
+    if(name == avd_state.left.alias){
       //apply css animation class to hide left
-    } else {
+    } else if(name == avd_state.right.alias) {
       //apply css animation class to hide right
     }    
+  };
+  this.loadScript = function( txt ){
+    avd_state.scriptAhead = Tools.tokenizeScript( txt );
+    avd_state.scriptBehind = [];
+  }
+  this.step = function(){
+    if(!avd_state.scriptAhead || !avd_state.scriptBehind || avd_state.scriptAhead.length == 0){
+      return;
+    }
+    let line = avd_state.scriptAhead.shift();
+    readLine(line)
+    avd_state.scriptBehind.push(line)
+    
+  };
+  this.unstep = function(){
+    if(!avd_state.scriptAhead || !avd_state.scriptBehind || avd_state.scriptBehind.length == 0){
+      return;
+    }
+    let line = avd_state.scriptBehind.pop();
+    readLine(line)
+    avd_state.scriptAhead.unshift(line)
+  };
+  function readLine(line){
+    console.log(line)
   }
 }
