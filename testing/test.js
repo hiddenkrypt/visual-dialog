@@ -16,21 +16,21 @@ function testInit(){
   let stepBack = document.getElementById("stepBack");
 
   say.addEventListener("click", ()=>{adaVisualDialog.showDialog(testText.value)});
-  startLeft.addEventListener("click", ()=>{adaVisualDialog.showCharacter("Kraken", "kraken.png", "left")});
-  startRight.addEventListener("click", ()=>{adaVisualDialog.showCharacter("Kat", "kat.png",  "right")});
+  startLeft.addEventListener("click", ()=>{adaVisualDialog.showCharacter("Kraken", "./adaIGF/dialog/kraken.png", "left")});
+  startRight.addEventListener("click", ()=>{adaVisualDialog.showCharacter("Kat", "./adaIGF/dialog/kat.png",  "right")});
   endLeft.addEventListener("click", ()=>{adaVisualDialog.exitCharacter("left")});
   endRight.addEventListener("click", ()=>{adaVisualDialog.exitCharacter("right")});
 
-  scriptPlay.addEventListener("click", ()=>{adaVisualDialog.runScript(scriptText.value)});
+  scriptPlay.addEventListener("click", ()=>{adaVisualDialog.loadScript(scriptText.value)});
   step.addEventListener("click", ()=>{adaVisualDialog.step()});
-  stepBack.addEventListener("click", ()=>{adaVisualDialog.stepBack()});
+  stepBack.addEventListener("click", ()=>{adaVisualDialog.unstep()});
   
-  scriptText.value = `#fileroot: /ada_IGF/dialog/
+  scriptText.value = `#fileroot: ./ada_IGF/dialog/
 #enter: Kraken,left,kraken.png
 
 Kraken:Hey Kat!
 
-#enter: Kat,right, kat.png
+#enter: Kat Tastro Phe,right, kat.png, Kat
 
 Kat: Oh, hey.
 Kat:Have you seen Calamity? 
@@ -40,9 +40,9 @@ Kraken: Noooo...
 *Kraken gives Cal a thumbs up, their mission accomplished*
 
 #exit: Kraken
-#enter: Calamity,left,calamity.png
-
-Calamity: Hey~`;
+#enter: Calamity Havok,left,calamity.png
+#alias Calamity Havok, Cal
+Cal: Hey~`;
   
   adaVisualDialog.init();
 }
