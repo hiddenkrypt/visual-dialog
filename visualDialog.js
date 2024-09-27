@@ -3,8 +3,8 @@ function VisualDialog() {
   let avd_state = {
     left: null,
     right: null,
-    scriptBehind: null,
-    scriptAhead: null,
+    scriptPointer: null,
+    script: null,
     fileroot: ""
   }
   let avd_elements;
@@ -35,61 +35,137 @@ function VisualDialog() {
     avd_elements.dialogContainer.appendChild(avd_elements.dialog);
     document.body.appendChild(avd_container);
   }
-  this.showCharacter = function( characterName, characterImage, side ){
-    console.log(`showCharacter() ${characterName}, ${side}, ${characterImage}`);
-    let anim = avd_animations[side+"Avatar"].show;
-    let avatar;
-    let title;
-    if(side=="left"){
-      avatar = avd_elements.avatarLeft;
-      title = avd_elements.titleLeft;
-    } else {
-      avatar = avd_elements.avatarRight;
-      title = avd_elements.titleRight;
-    }
-    title.innerHTML = characterName;
-    avatar.src = `${characterImage}`;
-    avatar.animate(anim.a, anim.t) 
-    anim = avd_animations[side+"Title"].show;
-    title.animate(anim.a, anim.t) 
-    
-  }
-  this.showDialog = function( dialogText ){
-    let anim = avd_animations.textBox.show;
-    avd_elements.dialogContainer.animate(anim.a, anim.t);
-    anim = avd_animations.dialog.show;
-    avd_elements.dialog.animate(anim.a, anim.t);
-    
-  }
-  this.exitCharacter = function( name ){
-    if(name == avd_state.left.alias){
-      //apply css animation class to hide left
-    } else if(name == avd_state.right.alias) {
-      //apply css animation class to hide right
-    }    
-  };
   this.loadScript = function( txt ){
-    avd_state.scriptAhead = Tools.tokenizeScript( txt );
-    avd_state.scriptBehind = [];
+    avd_state.script = Tools.tokenizeScript( txt );
+    avd_state.scriptPointer = -1;
+    showDialog();
   }
   this.step = function(){
-    if(!avd_state.scriptAhead || !avd_state.scriptBehind || avd_state.scriptAhead.length == 0){
+    console.log(avd_state.scriptPointer);
+    if(!avd_state.script || avd_state.scriptPointer >= avd_state.script.length-1 ){
       return;
     }
-    let line = avd_state.scriptAhead.shift();
-    readLine(line)
-    avd_state.scriptBehind.push(line)
+    let line = avd_state.script[++avd_state.scriptPointer];
+    readLine(line);
+    if(line.type == "fileroot" || line.type == "alias"){
+      console.log("jump")
+      this.step();
+    }
     
   };
   this.unstep = function(){
-    if(!avd_state.scriptAhead || !avd_state.scriptBehind || avd_state.scriptBehind.length == 0){
+    console.log(avd_state.scriptPointer);
+    if(!avd_state.script || avd_state.scriptPointer <= 0 ){
       return;
     }
-    let line = avd_state.scriptBehind.pop();
-    readLine(line)
-    avd_state.scriptAhead.unshift(line)
+    let line = avd_state.script[--avd_state.scriptPointer]
+    if( line.type =="speech" || line.type == "narration" ){
+      readLine(line);
+    } else {
+      this.unstep()
+    }
   };
   function readLine(line){
     console.log(line)
+    var handlers = {
+      "enter": function(line){
+        enterCharacter(line.name, line.side, line.file, line.alias); 
+      },
+      "exit": function(line){
+        exitCharacter(line.name); 
+      },
+      "fileroot": function(line){
+        avd_state.fileroot = line.path;
+      },
+      "alias": function(line){
+        console.log("ALIAS");
+        console.log(avd_state.left);
+        console.log(avd_state.right);
+        console.log(line);
+        if( avd_state.left && avd_state.left.name == line.name ){
+          avd_state.left.alias = line.alias;
+        }
+        else if( avd_state.right && avd_state.right.name == line.name ){
+          avd_state.right.alias = line.alias;
+        }
+      },
+      "narration": function(line){
+          sayDialog( "narrator", line.line );
+      },
+      "speech": function( line ){
+        if( avd_state.left && avd_state.left.alias == line.name ){
+          sayDialog( "left", line.line );
+        }
+        else if( avd_state.right && avd_state.right.alias == line.name ){
+          sayDialog( "right", line.line );
+        }
+        
+      }
+    }
+    handlers[line.type](line);
+    function findCharacter(name){
+      console.log(name)
+      console.log("left- "+avd_state?.left?.name);
+      console.log("right- "+avd_state?.right?.name);
+      if( avd_state.left && avd_state.left.name == name ){
+        return avd_state.left
+      }
+      else if( avd_state.right && avd_state.right.name == name ){
+        return avd_state.right
+      }
+      return null
+    }
   }
+  
+  
+  function enterCharacter( characterName, side, characterImage, alias ){
+    console.log(`showCharacter() ${characterName}, ${side}, ${characterImage}`);
+
+
+    avd_state[side] = {
+      name:characterName, 
+      alias:alias?alias:characterName, 
+    };
+    let enterAvatar = (side=="left") ? avd_elements.avatarLeft: avd_elements.avatarRight;
+    let enterTitle = (side=="left") ? avd_elements.titleLeft: avd_elements.titleRight;
+    
+    enterTitle.innerHTML = characterName;
+    enterAvatar.src = avd_state.fileroot + `${characterImage}`;
+    let anim = (side=="left") ? avd_animations["avatarLeft"].show : avd_animations["avatarRight"].show;
+    enterAvatar.animate(anim.a, anim.t) 
+    anim = (side=="left") ? avd_animations["titleLeft"].show : avd_animations["titleRight"].show;
+    enterTitle.animate(anim.a, anim.t) 
+    
+  }
+  function showDialog(){
+    let anim = avd_animations.textBox.show;
+    avd_elements.dialogContainer.animate(anim.a, anim.t);
+  }
+  function sayDialog( side, dialogText ){
+    console.log("say: "+dialogText);
+    if(side=="left"){
+      avd_elements.dialog.style.textAlign = "left";
+      avd_elements.dialog.style.fontStyle = "normal";
+    }
+    if(side=="right"){
+      avd_elements.dialog.style.textAlign = "right";
+      avd_elements.dialog.style.fontStyle = "normal";
+    }
+    if(side=="narrator"){
+      avd_elements.dialog.style.textAlign = "center";
+      avd_elements.dialog.style.fontStyle = "italic";
+    }
+    anim = avd_animations.dialog.show;
+    avd_elements.dialog.innerHTML = dialogText;
+    avd_elements.dialog.animate(anim.a, anim.t);
+  }
+  function exitCharacter( name ){
+    if(avd_state.left && name == avd_state.left.alias){
+      avd_elements.avatarLeft.style.opacity = 0;
+      avd_elements.titleLeft.style.opacity = 0;
+    } else if(avd_state.right && name == avd_state.right.alias) {
+      avd_elements.avatarRight.style.opacity = 0;
+      avd_elements.titleRight.style.opacity = 0;
+    }    
+  };
 }

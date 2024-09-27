@@ -16,8 +16,8 @@ function testInit(){
   let stepBack = document.getElementById("stepBack");
 
   say.addEventListener("click", ()=>{adaVisualDialog.showDialog(testText.value)});
-  startLeft.addEventListener("click", ()=>{adaVisualDialog.showCharacter("Kraken", "./adaIGF/dialog/kraken.png", "left")});
-  startRight.addEventListener("click", ()=>{adaVisualDialog.showCharacter("Kat", "./adaIGF/dialog/kat.png",  "right")});
+  startLeft.addEventListener("click", ()=>{adaVisualDialog.enterCharacter("Kraken", "./adaIGF/dialog/kraken.png", "left")});
+  startRight.addEventListener("click", ()=>{adaVisualDialog.enterCharacter("Kat", "./adaIGF/dialog/kat.png",  "right")});
   endLeft.addEventListener("click", ()=>{adaVisualDialog.exitCharacter("left")});
   endRight.addEventListener("click", ()=>{adaVisualDialog.exitCharacter("right")});
 
@@ -25,7 +25,7 @@ function testInit(){
   step.addEventListener("click", ()=>{adaVisualDialog.step()});
   stepBack.addEventListener("click", ()=>{adaVisualDialog.unstep()});
   
-  scriptText.value = `#fileroot: ./ada_IGF/dialog/
+  scriptText.value = `#fileroot: ./adaIGF/dialog/
 #enter: Kraken,left,kraken.png
 
 Kraken:Hey Kat!
@@ -41,7 +41,7 @@ Kraken: Noooo...
 
 #exit: Kraken
 #enter: Calamity Havok,left,calamity.png
-#alias Calamity Havok, Cal
+#alias: Calamity Havok, Cal
 Cal: Hey~`;
   
   adaVisualDialog.init();

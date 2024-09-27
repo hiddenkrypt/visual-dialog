@@ -5,19 +5,23 @@ let Tools = {
     return txt.map(parseLine);
     function parseLine(str){
       var parsers = {
-        "*": e=>{ return {type:"narration", line: e.replace(/\* ?/, "").trim()} },
+        "*": e=>{ return {type:"narration", line: e.replace(/\* ?/g, "").trim()} },
         "#exit": e=>{ return {type:"exit", name: e.replace(/#exit: ?/, "").trim()} },
         "#enter": e=>{ 
           let data = e.replace(/#enter: ?/, "").split(/, ?/);
-          let token = {type:"enter", name: data[0].trim(), side: data[1].trim(), file:data[2].trim()}
+          let token = {type:"enter", name: data[0].trim(), side: side(data[1]), file:data[2].trim()}
           if( data[3] ){
             token.alias = data[3].trim();
           }
           return token
         },
-        "#fileroot": e=>{ return {type:"fileroot", str: e.replace(/#fileroot: ?/, "").trim()} },
+        "#fileroot": e=>{ return {type:"fileroot", path: e.replace(/#fileroot: ?/, "").trim()} },
         "#alias": e=>{ 
+          console.log("#alias");
+          console.log(e);
+          console.log(e.replace(/#alias: ?/, ""));
           let data = e.replace(/#alias: ?/, "").split(/, ?/);
+          console.log(data);
           return {type:"alias", name: data[0].trim(), alias: data[1].trim()} 
         }
       }
@@ -27,7 +31,14 @@ let Tools = {
           return parsers[key](str);
         }
       }
-      return {type:"speech", speaker: str.split(/: ?/)[0].trim(), line:str.split(/: ?/)[1].trim()} 
+      return {type:"speech", name: str.split(/: ?/)[0].trim(), line:str.split(/: ?/)[1].trim()} 
+    }
+    function side(txt){
+      if( txt.trim().match(/left/i) ){
+        return "left"
+      } else if ( txt.trim().match(/right/i) ){
+        return "right"
+      }
     }
   }
 }

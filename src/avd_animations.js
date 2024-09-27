@@ -1,7 +1,7 @@
 var avd_animations = {
   
   
-  leftAvatar: {
+  avatarLeft: {
     show: {
       a: [
         { left:"-20%", opacity:0, transform:"skew(-60deg)" },
@@ -23,7 +23,7 @@ var avd_animations = {
   },
   
   
-  rightAvatar: {
+  avatarRight: {
     show: {
       a:[
         { left:"80%", opacity:0, transform:"skew(60deg)" },
@@ -45,7 +45,7 @@ var avd_animations = {
   },
   
   
-  leftTitle: {
+  titleLeft: {
     show: {
       a: [
         { left:"20%", opacity:0, transform:"skew(0deg)" },
@@ -65,7 +65,7 @@ var avd_animations = {
   },
   
   
-  rightTitle: {
+  titleRight: {
     show: {
       a: [
         { left:"50%", opacity:0, transform:"skew(0deg)" },
