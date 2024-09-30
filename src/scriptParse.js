@@ -4,6 +4,7 @@ let Tools = {
     txt = txt.split('\n')
     return txt.map(parseLine);
     function parseLine(str){
+      console.log("line: "+str);
       var parsers = {
         "*": e=>{ return {type:"narration", line: e.replace(/\* ?/g, "").trim()} },
         "#exit": e=>{ return {type:"exit", name: e.replace(/#exit: ?/, "").trim()} },
@@ -17,11 +18,7 @@ let Tools = {
         },
         "#fileroot": e=>{ return {type:"fileroot", path: e.replace(/#fileroot: ?/, "").trim()} },
         "#alias": e=>{ 
-          console.log("#alias");
-          console.log(e);
-          console.log(e.replace(/#alias: ?/, ""));
           let data = e.replace(/#alias: ?/, "").split(/, ?/);
-          console.log(data);
           return {type:"alias", name: data[0].trim(), alias: data[1].trim()} 
         }
       }

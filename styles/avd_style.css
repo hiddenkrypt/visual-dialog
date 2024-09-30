@@ -1,6 +1,7 @@
 div{ color:#fff}
 #avd_container{
   color: #fff;
+  font-family: Tahoma , sans-serif;
 }
 #avatarLeft,#avatarRight{
   width: 18%;
@@ -18,6 +19,7 @@ div{ color:#fff}
 }
 #avatarRight{
   left: 80%;
+  transform: scaleX(-1);
 }
 #titleLeft{
   left: 20%;
@@ -28,11 +30,12 @@ div{ color:#fff}
   rotate: 8deg;
 }
 #titleLeft, #titleRight{
+  font-family: Georgia, serif;
   top:23vw;
   z-index:15;
   font-size: 2.5vw;
-  background-color:rgba(0,0,0,.6);
-  box-shadow: 0 0 10px 5px rgba(0,0,0,.6);
+  background-color: rgba(0,0,0,.6);
+  box-shadow: 0 0 10px 5px rgba(0,0,0,1);
   padding-left: .5em;
   padding-right: .5em;
   opacity:0; 
@@ -40,7 +43,7 @@ div{ color:#fff}
 
 #dialogContainer{
   font-size: 2vw;
-  background-color: rgba(0,0,0,.4);
+  background-color: rgba(0,0,0,.6);
   height: 5px;
   width: 5px;
   opacity:0;
