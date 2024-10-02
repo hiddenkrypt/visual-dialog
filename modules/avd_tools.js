@@ -1,4 +1,4 @@
-let Tools = {  
+export var Tools = {  
   tokenizeScript: function(txt){ 
     txt = txt.replace(/\n+/g, '\n')
     txt = txt.split('\n')
@@ -39,22 +39,3 @@ let Tools = {
     }
   }
 }
-// let lines= `#fileroot: /adaIGF/dialog/
-// #enter: Kraken,left,kraken.png
-
-// Kraken:Hey Kat!
-
-// #enter: Kat Tastro Phe,right, kat.png, Kat
-
-// Kat: Oh, hey.
-// Kat:Have you seen Calamity? 
-// * Calamity Havok stalks up from behind *
-// Kraken: Noooo...
-// *Calamity pounces on Kat from behind, wrapping her in a hug and dragging her to the ground*
-// *Kraken gives Cal a thumbs up, their mission accomplished*
-
-// #exit: Kraken
-// #enter: Calamity Havok,left,calamity.png
-// #alias: Calamity Havok, Cal
-// Cal: Hey~`;
-// console.log(tokenizeScript(lines));

@@ -1,6 +1,4 @@
-var avd_animations = {
-  
-  
+export var avd_animations = {
   avatarLeft: {
     show: {
       a: [
