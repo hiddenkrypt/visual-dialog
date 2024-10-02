@@ -11,8 +11,13 @@
       "discord": "0x0ada"
     }
   ],
-  "esmodules": [
+  "socket": true,
+  "scripts": [
     "visualDialog.js"
+  ],
+  "esmodules": [
+    "modules/avd_animations.js",
+    "modules/avd_tools.js"
   ],
   "styles": [
     "styles/fonts.css"
