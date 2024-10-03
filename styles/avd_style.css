@@ -7,8 +7,9 @@ div{ color:#fff}
   width: 18%;
   z-index: 10;
   border-radius: 5%;
-  top:10%;
-  opacity:0;
+  top: 10%;
+  opacity: 0;
+  border: 0;
 }
 
 #avatarLeft,#avatarRight,#titleLeft, #titleRight{
@@ -18,7 +19,7 @@ div{ color:#fff}
   left: 2%;
 }
 #avatarRight{
-  left: 80%;
+  left: 50%;
   transform: scaleX(-1);
 }
 #titleLeft{

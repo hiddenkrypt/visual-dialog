@@ -1,5 +1,8 @@
-export var Tools = {  
-  tokenizeScript: function(txt){ 
+export function avd_tools() {
+  return { 
+    tokenizeScript: tokenizeScript
+  }
+  function tokenizeScript(txt){ 
     txt = txt.replace(/\n+/g, '\n')
     txt = txt.split('\n')
     return txt.map(parseLine);

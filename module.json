@@ -1,34 +1,38 @@
 {
   "id": "visual-dialog",
   "title": "Visual Dialog",
-  "description": "Scriptable, macro-ready dialog engine.",
-  "authors": [ { "name": "Ada", "email": "hiddenkrypt@gmail.com", "discord": "0x0ada" } ],
-  "socket": true,
-  "esmodules": [
-    "src/visualDialog.js",
-    "src/avd_animations.js",
-    "src/avd_tools.js"
-  ],
-  "styles": ["styles/fonts.css"],
-  "languages": [
+  "description": "im going to kill myself.",
+  "version": "1.0",
+  "authors": [
     {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json",
+      "name": "Ada",
+      "email": "hiddenkrypt@gmail.com",
+      "discord": "0x0ada",
       "flags": {}
     }
   ],
-  
-  
-  
-  "version": "0.02",
+  "esmodules": [
+    "src/avd_tools.js",
+    "src/avd_animations.js",
+    "src/avd_visualDialog.js"
+  ],
+  "styles": [
+    "styles/avd_style.css"
+  ],
+  "languages": [
+  ],
+  "relationships": {
+  },
   "url": "https://github.com/hiddenkrypt/visual-dialog",
-  "manifest": "",
-  "download": "",
-  "readme": "https://github.com/hiddenkrypt/visual-dialog/blob/main/README.md",
+  "manifest": "https://github.com/hiddenkrypt/visual-dialog/releases/download/0.02/module.json",
+  "download": "https://github.com/hiddenkrypt/visual-dialog/releases/download/0.02/visual-dialog.zip",
   "bugs": "https://github.com/hiddenkrypt/visual-dialog/issues",
+  "readme": "https://github.com/hiddenkrypt/visual-dialog/blob/main/README.md",
+  "flags": {
+    "allowBugReporter": true
+  },
   "compatibility": {
     "minimum": "11",
-    "verified": "11"
+    "verified": "11.315"
   }
 }

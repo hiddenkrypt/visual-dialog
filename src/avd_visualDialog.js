@@ -1,15 +1,15 @@
-import { avd_animations } from "./avd_animations.js";
-import { avd_tools } from "./avd_tools.js";
+import {avd_animations} from "./avd_animations.js";
+import {avd_tools} from "./avd_tools.js";
 
-  console.log('\n\n\n\n\nVisual Dialog | Initializing Visual Dialog\n\n\n\n\n');
-alert("Fuck");
+
+
 Hooks.once('init', async function () {
-  console.log('\n\n\n\n\nVisual Dialog | Initializing Visual Dialog\n\n\n\n\n');
+  console.log('Visual Dialog | Initializing Visual Dialog');
   window.avd_VisualDialog = new VisualDialog();
-  alert("Fuck2");
-
 
   function VisualDialog() {
+    let animations = avd_animations();
+    let tools = avd_tools();
     let avd_state = {
       left: null,
       right: null,
@@ -21,7 +21,10 @@ Hooks.once('init', async function () {
     let avd_elements;
     let avd_container = document.createElement("div");
     avd_container.id = "avd_container";
-    this.init = function(){
+    avd_setup();
+    
+    function avd_setup(){
+      
       for (let [e,v] in avd_elements){
         v.parentNode.removeChild(v);
       }
@@ -33,9 +36,6 @@ Hooks.once('init', async function () {
         titleRight: document.createElement("div"),
         dialogContainer: document.createElement("div")
       };
-      avd_setup();
-    };
-    function avd_setup(){
       for (let e in avd_elements){
         avd_elements[e].id = e
         avd_container.appendChild(avd_elements[e]);
@@ -45,8 +45,9 @@ Hooks.once('init', async function () {
       avd_elements.dialogContainer.appendChild(avd_elements.dialog);
       document.body.appendChild(avd_container);
     }
+    
     this.loadScript = function( txt ){
-      avd_state.script = avd_tools.tokenizeScript( txt );
+      avd_state.script = tools.tokenizeScript( txt );
       avd_state.scriptPointer = -1;
       showDialog();
     }
@@ -136,10 +137,10 @@ Hooks.once('init', async function () {
       
       enterTitle.innerHTML = characterName;
       enterAvatar.src = avd_state.fileroot + `${characterImage}`;
-      let leftAvatarAnimations = avd_animations.avatarLeft;
-      let rightAvatarAnimations = avd_animations.avatarRight;
-      let leftTitleAnimations = avd_animations.avatarLeft;
-      let rightTitleAnimations = avd_animations.titleRight;
+      let leftAvatarAnimations = animations.avatarLeft;
+      let rightAvatarAnimations = animations.avatarRight;
+      let leftTitleAnimations = animations.avatarLeft;
+      let rightTitleAnimations = animations.titleRight;
       
       let anim = null;
       if( side == "left" ){
@@ -157,7 +158,7 @@ Hooks.once('init', async function () {
       step()
     }
     function showDialog(){
-      let anim = avd_animations.textBox.show;
+      let anim = animations.textBox.show;
       avd_elements.dialogContainer.animate(anim.a, anim.t);
     }
     function sayDialog( side, dialogText ){
@@ -168,13 +169,13 @@ Hooks.once('init', async function () {
         avd_elements.dialog.style.fontSize = "1.9vw";
         avd_elements.dialog.style.textAlign = "left";
         avd_elements.dialog.style.fontStyle = "normal";
-        let anim = avd_animations.avatarRight.gray;
+        let anim = animations.avatarRight.gray;
         avd_elements.avatarRight.animate(anim.a, anim.t)
-        anim = avd_animations.avatarLeft.degray;
+        anim = animations.avatarLeft.degray;
         avd_elements.avatarLeft.animate(anim.a, anim.t)
-        anim = avd_animations.textBox.left;
+        anim = animations.textBox.left;
         avd_elements.dialogContainer.animate(anim.a, anim.t);
-        anim = avd_animations.textBox.right;
+        anim = animations.textBox.right;
         avd_elements.dialog.animate(anim.a, anim.t);
       }
       if(side=="right"){
@@ -182,13 +183,13 @@ Hooks.once('init', async function () {
         avd_elements.dialog.style.fontSize = "1.9vw";
         avd_elements.dialog.style.textAlign = "right";
         avd_elements.dialog.style.fontStyle = "normal";
-        let anim = avd_animations.avatarLeft.gray;
+        let anim = animations.avatarLeft.gray;
         avd_elements.avatarLeft.animate(anim.a, anim.t)
-        anim = avd_animations.avatarRight.degray;
+        anim = animations.avatarRight.degray;
         avd_elements.avatarRight.animate(anim.a, anim.t)
-        anim = avd_animations.textBox.right;
+        anim = animations.textBox.right;
         avd_elements.dialogContainer.animate(anim.a, anim.t);
-        anim = avd_animations.textBox.left;
+        anim = animations.textBox.left;
         avd_elements.dialog.animate(anim.a, anim.t);
       }
       if(side=="narrator"){
@@ -196,29 +197,29 @@ Hooks.once('init', async function () {
         avd_elements.dialog.style.fontSize = "1.6vw";
         avd_elements.dialog.style.textAlign = "center";
         avd_elements.dialog.style.fontStyle = "italic";
-        let anim = avd_animations.avatarLeft.gray;
+        let anim = animations.avatarLeft.gray;
         avd_elements.avatarLeft.animate(anim.a, anim.t)
-        anim = avd_animations.avatarRight.gray;
+        anim = animations.avatarRight.gray;
         avd_elements.avatarRight.animate(anim.a, anim.t)
         wrapR = "";
         wrapL = "";
-        anim = avd_animations.textBox.center;
+        anim = animations.textBox.center;
         avd_elements.dialogContainer.animate(anim.a, anim.t);
         avd_elements.dialog.animate(anim.a, anim.t);
       }
       
-      let anim = avd_animations.dialog.show;
+      let anim = animations.dialog.show;
       avd_elements.dialog.animate(anim.a, anim.t);
       avd_elements.dialog.innerHTML = `${wrapL}${dialogText}${wrapR}`;
     }
     function exitCharacter( name ){
       if(avd_state.left && name == avd_state.left.alias){
-        let anim = avd_animations.avatarLeft.exit;
+        let anim = animations.avatarLeft.exit;
         avd_elements.avatarLeft.animate(anim.a, anim.t);
-        anim = avd_animations.titleLeft.exit;
+        anim = animations.titleLeft.exit;
         avd_elements.titleLeft.animate(anim.a, anim.t);
       } else if(avd_state.right && name == avd_state.right.alias) {
-        let anim = avd_animations.avatarRight.exit;
+        let anim = animations.avatarRight.exit;
         avd_elements.avatarRight.animate(anim.a, anim.t);
         anim = vd_animations.titleRight.exit;
         avd_elements.titleRight.animate(anim.a, anim.t);
@@ -226,17 +227,17 @@ Hooks.once('init', async function () {
       step()
     };
     function endDialog(){
-      let anim = avd_animations.avatarLeft.exit;
+      let anim = animations.avatarLeft.exit;
       avd_elements.avatarLeft.animate(anim.a, anim.t);
-      anim = avd_animations.titleLeft.exit;
+      anim = animations.titleLeft.exit;
       avd_elements.titleLeft.animate(anim.a, anim.t);
-      anim = avd_animations.avatarRight.exit;
+      anim = animations.avatarRight.exit;
       avd_elements.avatarRight.animate(anim.a, anim.t);
-      anim = avd_animations.titleRight.exit;
+      anim = animations.titleRight.exit;
       avd_elements.titleRight.animate(anim.a, anim.t);
-      anim = avd_animations.dialog.exit;
+      anim = animations.dialog.exit;
       avd_elements.dialog.animate(anim.a, anim.t);
-      anim = avd_animations.textBox.exit;
+      anim = animations.textBox.exit;
       avd_elements.dialogContainer.animate(anim.a, anim.t);
     }
   }
