@@ -1,47 +1,32 @@
 {
-  "name": "visual-dialog",
   "id": "visual-dialog",
   "title": "Visual Dialog",
   "description": "Scriptable, macro-ready dialog engine.",
-  "version": "0.01",
-  "authors": [
+  "authors": [ { "name": "Ada", "email": "hiddenkrypt@gmail.com", "discord": "0x0ada" } ],
+  "socket": true,
+  "esmodules": [
+    "src/visualDialog.js",
+    "src/avd_animations.js",
+    "src/avd_tools.js"
+  ],
+  "styles": ["styles/fonts.css"],
+  "languages": [
     {
-      "name": "Ada",
-      "email": "hiddenkrypt@gmail.com",
-      "discord": "0x0ada"
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
     }
   ],
-  "socket": true,
-  "scripts": [
-    "visualDialog.js"
-  ],
-  "esmodules": [
-    "modules/avd_animations.js",
-    "modules/avd_tools.js"
-  ],
-  "styles": [
-    "styles/fonts.css"
-  ],
-  "languages": [
-  ],
   
-  "relationships": {
-    "requires": [
-      {
-        "id": "sequencer",
-        "type": "module",
-        "manifest": "https://github.com/fantasycalendar/FoundryVTT-Sequencer/releases/latest/download/module.json"
-      }
-    ]
-  },
+  
+  
+  "version": "0.02",
   "url": "https://github.com/hiddenkrypt/visual-dialog",
   "manifest": "",
   "download": "",
-  "bugs": "https://github.com/hiddenkrypt/visual-dialog/issues",
   "readme": "https://github.com/hiddenkrypt/visual-dialog/blob/main/README.md",
-  "flags": {
-    "allowBugReporter": true
-  },
+  "bugs": "https://github.com/hiddenkrypt/visual-dialog/issues",
   "compatibility": {
     "minimum": "11",
     "verified": "11"
