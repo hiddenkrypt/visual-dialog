@@ -3,11 +3,14 @@ export function avd_tools() {
     tokenizeScript: tokenizeScript
   }
   function tokenizeScript(txt){ 
-    txt = txt.replace(/\n+/g, '\n')
+    txt = txt.replace(/^\n+$/g, '')
     txt = txt.split('\n')
-    return txt.map(parseLine);
+    return txt.map(parseLine).filter(e=> e.type!= "skip");
     function parseLine(str){
-      console.log("line: "+str);
+      str = str.trim()
+      if(str == ""){
+        return {type:"skip"}
+      }
       var parsers = {
         "*": e=>{ return {type:"narration", line: e.replace(/\* ?/g, "").trim()} },
         "#exit": e=>{ return {type:"exit", name: e.replace(/#exit: ?/, "").trim()} },
