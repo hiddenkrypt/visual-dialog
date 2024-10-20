@@ -1,0 +1,213 @@
+
+@font-face {
+  font-family: "a_dripping_marker";
+  src: url("../fonts/a_dripping_marker/adrip1.ttf");
+}
+@font-face {
+  font-family: "basis33";
+  src: url("../fonts/basis33/basis33.ttf");
+}
+@font-face {
+  font-family: "brenton_scrawl";
+  src: url("../fonts/brentonscrawltype/bwptype.ttf");
+}
+@font-face {
+  font-family: "cardinal";
+  src: url("../fonts/cardinal/Cardinal.ttf");
+}
+@font-face {
+  font-family: "cathallina";
+  src: url("../fonts/cathallina/Cathallina.ttf");
+}
+@font-face {
+  font-family: "caviar_dreams";
+  src: url("../fonts/caviar_dreams/CaviarDreams.ttf");
+}
+@font-face {
+  font-family: "caviar_dreams_bold";
+  src: url("../fonts/caviar_dreams/CaviarDreams_Bold.ttf");
+}
+@font-face {
+  font-family: "caviar_dreams_bolditalic";
+  src: url("../fonts/caviar_dreams/CaviarDreams_BoldItalic.ttf");
+}
+@font-face {
+  font-family: "caviar_dreams_italic";
+  src: url("../fonts/caviar_dreams/CaviarDreams_Italic.ttf");
+}
+@font-face {
+  font-family: "college";
+  src: url("../fonts/college/college.ttf");
+}
+@font-face {
+  font-family: "college_bold";
+  src: url("../fonts/college/college_bold.ttf");
+}
+@font-face {
+  font-family: "college_condensed";
+  src: url("../fonts/college/college_condensed.ttf");
+}
+@font-face {
+  font-family: "college_serif");;
+  src: url("../fonts/college/college_serif.ttf");
+}
+@font-face {
+  font-family: "dsnet_child";
+  src: url("../fonts/dsnet_child/DSnet_Child.ttf");
+}
+@font-face {
+  font-family: "dsnet_stamped";
+  src: url("../fonts/dsnet_stamped/DSnet_Stamped.ttf");
+}
+@font-face {
+  font-family: "edo_sz";
+  src: url("../fonts/edo_sz/edosz.ttf");
+}
+@font-face {
+  font-family: "exorcista";
+  src: url("../fonts/exorcista/Exorcista_-Jed_40.ttf");
+}
+@font-face {
+  font-family: "ghastly_panic";
+  src: url("../fonts/ghastly_panic/Ghastly Panic.ttf");
+}
+@font-face {
+  font-family: "ghost_chase";
+  src: url("../fonts/ghostchase/GhostChase.ttf");
+}
+@font-face {
+  font-family: "glass_houses";
+  src: url("../fonts/glass_houses/glashou.ttf");
+}
+@font-face {
+  font-family: "gothica_bold";
+  src: url("../fonts/gothica_2/Gothica-Bold.ttf");
+}
+@font-face {
+  font-family: "gothica_bolditalic";
+  src: url("../fonts/gothica_2/Gothica-BoldOblique.ttf");
+}
+@font-face {
+  font-family: "gothica";
+  src: url("../fonts/gothica_2/Gothica-Book.ttf");
+}
+@font-face {
+  font-family: "gothica_italic";
+  src: url("../fonts/gothica_2/Gothica-BookOblique.ttf");
+}
+@font-face {
+  font-family: "gothic_pixels";
+  src: url("../fonts/gothicpixels/GothicPixels.ttf");
+}
+@font-face {
+  font-family: "infinity_media";
+  src: url("../fonts/infinity_media/infmedia.ttf");
+}
+@font-face {
+  font-family: "kingthings_trypewriter_2";
+  src: url("../fonts/kingthings-trypewriter-2/Kingthings Trypewriter 2.ttf");
+}
+@font-face {
+  font-family: "lg_gothic";
+  src: url("../fonts/lggothic/LGGothic.ttf");
+}
+@font-face {
+  font-family: "media_home_entertainment";
+  src: url("../fonts/media_home_entertainment/Media Home Entertainment.ttf");
+}
+@font-face {
+  font-family: "november";
+  src: url("../fonts/november/novem___.ttf");
+}
+@font-face {
+  font-family: "panic_2";
+  src: url("../fonts/panic_2/PANIC.ttf");
+}
+@font-face {
+  font-family: "roboto_black";
+  src: url("../fonts/roboto/Roboto-Black.ttf");
+}
+@font-face {
+  font-family: "roboto_condensed";
+  src: url("../fonts/roboto/Roboto-Condensed.ttf");
+}
+@font-face {
+  font-family: "roboto_light";
+  src: url("../fonts/roboto/Roboto-Light.ttf");
+}
+@font-face {
+  font-family: "roboto";
+  src: url("../fonts/roboto/Roboto-Regular.ttf");
+}
+@font-face {
+  font-family: "soviet_style_cyrilic";
+  src: url("../fonts/soviet_style_cyrilic/SovietStyleCyrilic-Regular.ttf");
+}
+@font-face {
+  font-family: "super_mario_256";
+  src: url("../fonts/super_mario_256/SuperMario256.ttf");
+}
+@font-face {
+  font-family: "symtext";
+  src: url("../fonts/symtext/Symtext.ttf");
+}
+@font-face {
+  font-family: "vcr_osd_mono";
+  src: url("../fonts/vcr_osd_mono/VCR_OSD_MONO_1.001.ttf");
+}
+@font-face {
+  font-family: "a_glitch_in_time";
+  src: url("../fonts/a_glitch_in_time/A Glitch In Time.otf");
+}
+@font-face {
+  font-family: "bakso_sapi";
+  src: url("../fonts/bakso_sapi/BaksoSapi.otf");
+}
+@font-face {
+  font-family: "baliana";
+  src: url("../fonts/baliana/Baliana.otf");
+}
+@font-face {
+  font-family: "chomsky";
+  src: url("../fonts/chomsky/Chomsky.otf");
+}
+@font-face {
+  font-family: "doctor_glitch";
+  src: url("../fonts/doctor_glitch/Doctor Glitch.otf");
+}
+@font-face {
+  font-family: "dogica_pixel";
+  src: url("../fonts/dogica/dogicapixel.otf");
+}
+@font-face {
+  font-family: "dogica_pixel_bold";
+  src: url("../fonts/dogica/dogicapixelbold.otf");
+}
+@font-face {
+  font-family: "empherian";
+  src: url("../fonts/empherian/EmpherianDEMO.otf");
+}
+@font-face {
+  font-family: "good_brush";
+  src: url("../fonts/good_brush/Good Brush.otf");
+}
+@font-face {
+  font-family: "himagsikan_italic";
+  src: url("../fonts/himagsikan/himagsikan-italic.otf");
+}
+@font-face {
+  font-family: "himagsikan";
+  src: url("../fonts/himagsikan/himagsikan.otf");
+}
+@font-face {
+  font-family: "lemon_tuesday";
+  src: url("../fonts/lemon_tuesday/Lemon Tuesday.otf");
+}
+@font-face {
+  font-family: "old_london";
+  src: url("../fonts/old_london/Olondona.otf");
+}
+@font-face {
+  font-family: "the_signature";
+  src: url("../fonts/thesignature/Thesignature.otf");
+}
