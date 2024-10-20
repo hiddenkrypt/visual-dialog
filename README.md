@@ -18,6 +18,7 @@ Visual Dialog adds a singlet object to foundry that exposes ~~three~~ two functi
  
 ## Macro API
 **loadScript**: give Visual Dialog a script, and it will open the dialog window, ready to start stepping through.
+
 **step**: Once a script is loaded, this function progresses Visual Dialog through it. Some script lines like enter and exit will automatically step to the next dialog.
 
 ## Script formatting
@@ -27,35 +28,47 @@ A script is made up of Lines.
 
 Lines that start with an octothorpe or hash (#) are taken as commands. Commands usually take one or more arguments. all arguments are separated by commas.  
 
+### Filepath
+
     **#filepath <str>** 
-the <str> will be prefixed to any images in later portions of the script. 
+the `<str>` will be prefixed to any images in later portions of the script. 
+
+### Enter
 
     **#enter <name>, <side>, <img>, <alias>
-A new character is added to the dialog on the given <side> (options are "left" or "right"). The <name> will be displayed under thier picture, which will be an image found at the path <img>, or <fileroot><img> if the #fileroot command was used previously. <alias> is an optional parameter that gives a different name from <name> by which a character can be referred for later, see #alias below
+A new character is added to the dialog on the given `<side>` (options are "left" or "right"). The `<name>` will be displayed under thier picture, which will be an image found at the path `<img>`, or `<fileroot><img>` if the #fileroot command was used previously. `<alias>` is an optional parameter that gives a different name from `<name>` by which a character can be referred for later, see #alias below
+
+### Exit
 
     **#exit <name>**
 The named character will leave the stage, disappearing. 
 
+### Alias
+
     **#alias <name>, <str>
-the named character will now be able to be referenced as <str> in addition to their <name>. Very useful for characters with long display names. For instance, the character Dr.Ignatius Floofles would be a lot to type for every line of dialog. Aliasing lets you save time in subsequent lines:
+the named character will now be able to be referenced as `<str>` in addition to their `<name>`. Very useful for characters with long display names. For instance, the character Dr.Ignatius Floofles would be a lot to type for every line of dialog. Aliasing lets you save time in subsequent lines:
+
     #enter Dr.Ignatius Floofles, left, floof.png
     #alias Dr.Ignatius Floofles, iggy
     iggy: looks like I need to cut our conversation short
     iggy: I'm late for my next client
     #exit iggy
-    
-Lines that are wrapped in asterisks are taken as narration
+
+### Narration
+
     * <str> *
-<str> will be displayed as text said by none of the actors on screen. 
+Lines that are wrapped in asterisks are taken as narration. `<str>` will be displayed as text said by none of the actors on screen. 
 
-Lines that start with a character than has entered the stage are taken as dialog. 
+### Dialog
+
     <name>: <str>
-<name> can match to the characters name defined during their #enter command, or it can match their alias
+Lines that start with a character than has entered the stage are taken as dialog. `<name>` can match to the characters name defined during their #enter command, or it can match their alias
 
-###Example
+## Example
 Create two macros, one named "greeting" to start a dialog, and one named "step" to step through the active dialog.
 
 In macro "greeting", make sure it's set to script mode and put the following code: 
+
     avd_VisualDialog.loadScript(`
       #enter: Kraken, left, systems/lancer/assets/retrograde-minis/Retrograde-Minis-SSC-DUSK WING.png
       Kraken: Hey Kat!
@@ -66,9 +79,10 @@ In macro "greeting", make sure it's set to script mode and put the following cod
     `);
 
 In the macro "step" also in script mode, put this line:
+
     avd_VisualDialog.step()
 
-
+![readme_demo](https://github.com/user-attachments/assets/fadfdc21-e772-44f5-ad3d-ef69169f864c)
 
 Execute the greeting macro, then execute the step macro a few times to see it in action!
 
