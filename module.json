@@ -1,8 +1,8 @@
 {
   "id": "visual-dialog",
   "title": "Visual Dialog",
-  "description": "im going to kill myself.",
-  "version": "1.0",
+  "description": "A simple dialog engine with animations for puppet shows.",
+  "version": "0.02",
   "authors": [
     {
       "name": "Ada",
@@ -17,7 +17,8 @@
     "src/avd_visualDialog.js"
   ],
   "styles": [
-    "styles/avd_style.css"
+    "styles/avd_style.css",
+    "styles/avd_fonts.css"
   ],
   "languages": [
   ],
