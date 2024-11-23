@@ -43,6 +43,13 @@ Hooks.once('init', async function () {
       avd_elements.dialog = document.createElement("div");
       avd_elements.dialog.id = "dialog";
       avd_elements.dialogContainer.appendChild(avd_elements.dialog);
+      function imageFallback() {
+        console.error(`Visual Dialog: Image not found (${this.src})`);
+        this.src = '/modules/visual-dialog/assets/missing_image.png';
+        this.onerror = null;
+      }
+      avd_elements.avatarLeft.onerror = imageFallback;
+      avd_elements.avatarRight.onerror = imageFallback;
       document.body.appendChild(avd_container);
     }
     
