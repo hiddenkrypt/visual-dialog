@@ -1,10 +1,20 @@
+:root {
+  --avd_center: 5.95%;
+}
+
 div{ color:#fff}
 
 #avd_container{
+  position:absolute;
   color: #fff;
-  font-family: Tahoma , sans-serif;
+  pointer-events: none;
+  font-family: caviar_dreams , sans-serif;
+  left:50%;
+  height:100%;
+  width:100%;
 }
 #avatarLeft,#avatarRight{
+  border: 3px solid yellow;
   width: 18%;
   z-index: 10;
   border-radius: 5%;
@@ -17,10 +27,10 @@ div{ color:#fff}
   position: absolute;
 }
 #avatarLeft{
-  left: 2%;
+  left: -48%;
 }
 #avatarRight{
-  left: 50%;
+  left: 0%;
   transform: scaleX(-1);
 }
 #titleLeft{
