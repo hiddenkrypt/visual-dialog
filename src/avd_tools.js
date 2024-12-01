@@ -2,9 +2,10 @@ export function avd_tools() {
   return { 
     tokenizeScript: tokenizeScript
   }
-  function tokenizeScript(txt){ 
-    txt = txt.replace(/^\n+$/g, '')
-    txt = txt.split('\n')
+  function tokenizeScript( txt ){ 
+    txt = txt.replace( /^\n+$/g, '' );
+    txt = txt.split( '\n' );
+    var currentRoot = "";
     return txt.map(parseLine).filter(e=> e.type!= "skip");
     function parseLine(str){
       str = str.trim()
@@ -16,14 +17,17 @@ export function avd_tools() {
         "#exit": e=>{ return {type:"exit", name: e.replace(/#exit: ?/, "").trim()} },
         "#enter": e=>{ 
           let data = e.replace(/#enter: ?/, "").split(/, ?/);
-          let token = {type:"enter", name: data[0].trim(), side: side(data[1]), file:data[2].trim()}
+          let token = {type:"enter", name: data[0].trim(), side: side(data[1]), file:currentRoot+data[2].trim()}
           if( data[3] ){
             token.alias = data[3].trim();
           }
           return token
         },
-        "#fileroot": e=>{ return {type:"fileroot", path: e.replace(/#fileroot: ?/, "").trim()} },
-        "#alias": e=>{ 
+        "#fileroot": e => { 
+          currentRoot = e.replace(/#fileroot: ?/, "").trim();
+          return { type:"skip" } 
+        },
+        "#alias": e=> { 
           let data = e.replace(/#alias: ?/, "").split(/, ?/);
           return {type:"alias", name: data[0].trim(), alias: data[1].trim()} 
         }

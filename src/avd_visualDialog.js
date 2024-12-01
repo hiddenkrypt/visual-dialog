@@ -15,7 +15,6 @@ Hooks.once('init', async function () {
       right: null,
       scriptPointer: null,
       script: null,
-      fileroot: "",
       last: null
     }
     let avd_elements;
@@ -59,7 +58,6 @@ Hooks.once('init', async function () {
       showDialog();
     }
     var step = this.step = function(){
-      console.log(avd_state.scriptPointer);
       if(avd_state.scriptPointer >= avd_state.script.length-1 ){
         endDialog()
         return;
@@ -69,13 +67,12 @@ Hooks.once('init', async function () {
       }
       let line = avd_state.script[++avd_state.scriptPointer];
       readLine(line);
-      if(line.type == "fileroot" || line.type == "alias"){
+      if(line.type == "skip" || line.type == "alias"){
         step();
       }
       
     };
     this.unstep = function(){
-      console.log(avd_state.scriptPointer);
       if(!avd_state.script || avd_state.scriptPointer <= 0 ){
         return;
       }
@@ -87,16 +84,12 @@ Hooks.once('init', async function () {
       }
     };
     function readLine(line){
-      console.log(line)
       var handlers = {
         "enter": function(line){
           enterCharacter(line.name, line.side, line.file, line.alias); 
         },
         "exit": function(line){
           exitCharacter(line.name); 
-        },
-        "fileroot": function(line){
-          avd_state.fileroot = line.path;
         },
         "alias": function(line){
           if( avd_state.left && avd_state.left.name == line.name ){
@@ -143,7 +136,7 @@ Hooks.once('init', async function () {
       let enterTitle = (side=="left") ? avd_elements.titleLeft: avd_elements.titleRight;
       
       enterTitle.innerHTML = characterName;
-      enterAvatar.src = avd_state.fileroot + `${characterImage}`;
+      enterAvatar.src = characterImage;
       let leftAvatarAnimations = animations.avatarLeft;
       let rightAvatarAnimations = animations.avatarRight;
       let leftTitleAnimations = animations.avatarLeft;
