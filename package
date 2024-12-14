@@ -1,5 +1,5 @@
-assets/*
-fonts/*
+assets
+fonts
 module.json
-src/*
-styles/*
+src
+styles
