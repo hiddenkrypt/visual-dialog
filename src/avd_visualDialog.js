@@ -11,15 +11,15 @@ Hooks.once('init', async function () {
       scriptPointer: null,
       script: null,
       last: null,
-      narrator: {font:"caviar_dreams , sans-serif"},
+      narrator: {fontSpeech:"caviar_dreams, sans-serif"},
       find: function(name){
-        if(this.left.name == name || this.left.alias == name){
+        if(this.left && (this.left.name == name || this.left.alias == name)){
           return this.left;
         }
-        if(this.right.name == name || this.right.alias == name){
+        if(this.right && (this.right.name == name || this.right.alias == name)){
           return this.right;
         }
-        if( name == narrator ){
+        if( name == 'narrator' ){
           return this.narrator;
         }
         return {error:true};
@@ -111,13 +111,14 @@ Hooks.once('init', async function () {
           step();
         },
         "fontname": function(line){
-          console.log("set fontname: "+line.font);
-          avd_state.find(line.name).fontname = line.font;
+          console.log("set fontName: "+line.font);
+          avd_state.find(line.name).fontName = line.font;
           setTitleFont(avd_state.side(line.name), line.font);
           step();
         },
         "fontspeech": function(line){
-          avd_state.find(line.name).fontspeech = line.font;
+          avd_state.find(line.name).fontSpeech = line.font;
+          step();
         },
         "pause": ()=>{},
         "skip": ()=>{
@@ -194,13 +195,14 @@ Hooks.once('init', async function () {
     }
     function sayDialog( side, dialogText ){
       console.log("say:-"+side);
+      console.log(avd_state[side]);
       if( !avd_state.dialogDisplay ){
         showDialog();
       }
       let wrapL='“'
       let wrapR='”'
       if(side=="left"){
-        if(avd_state.left.font){avd_elements.dialog.style.fontFamily = avd_state.left.font;}
+        if(avd_state.left.fontSpeech){avd_elements.dialog.style.fontFamily = avd_state.left.fontSpeech;}
         avd_elements.dialog.style.backgroundcolor = "rgba(0,0,0,.6)";
         avd_elements.dialog.style.fontSize = "1.9vw";
         avd_elements.dialog.style.textAlign = "left";
@@ -215,7 +217,9 @@ Hooks.once('init', async function () {
         avd_elements.dialog.animate(anim.a, anim.t);
       }
       if(side=="right"){
-        if(avd_state.right.font){avd_elements.dialog.style.fontFamily = avd_state.right.font;}
+        if(avd_state.right.fontSpeech){
+          avd_elements.dialog.style.fontFamily = avd_state.right.fontSpeech;
+        }
         avd_elements.dialog.style.backgroundcolor = "rgba(0,0,0,.6)";
         avd_elements.dialog.style.fontSize = "1.9vw";
         avd_elements.dialog.style.textAlign = "right";
@@ -230,7 +234,7 @@ Hooks.once('init', async function () {
         avd_elements.dialog.animate(anim.a, anim.t);
       }
       if(side=="narrator"){
-        if(avd_state.narrator.font){avd_elements.dialog.style.fontFamily = avd_state.narrator.font;}
+        if(avd_state.narrator.fontSpeech){avd_elements.dialog.style.fontFamily = avd_state.narrator.fontSpeech;}
         avd_elements.dialog.style.backgroundcolor = "rgba(0,0,0,.9)";
         avd_elements.dialog.style.fontSize = "1.6vw";
         avd_elements.dialog.style.textAlign = "center";
