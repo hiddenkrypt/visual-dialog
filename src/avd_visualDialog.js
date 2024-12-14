@@ -92,6 +92,7 @@ Hooks.once('init', async function () {
         "exit": function(line){
           exitCharacter(line.name); 
         },
+        "pause": ()=>{},
         "alias": function(line){
           if( avd_state.left && avd_state.left.name == line.name ){
             avd_state.left.alias = line.alias;
@@ -232,19 +233,32 @@ Hooks.once('init', async function () {
       step()
     };
     function endDialog(){
-      avd_state.dialogDisplay = false;
-      let anim = animations.avatarLeft.exit;
-      avd_elements.avatarLeft.animate(anim.a, anim.t);
-      anim = animations.titleLeft.exit;
-      avd_elements.titleLeft.animate(anim.a, anim.t);
-      anim = animations.avatarRight.exit;
-      avd_elements.avatarRight.animate(anim.a, anim.t);
-      anim = animations.titleRight.exit;
-      avd_elements.titleRight.animate(anim.a, anim.t);
-      anim = animations.dialog.exit;
-      avd_elements.dialog.animate(anim.a, anim.t);
-      anim = animations.textBox.exit;
-      avd_elements.dialogContainer.animate(anim.a, anim.t);
+      if( avd_state.left ){
+        let anim = animations.avatarLeft.exit;
+        avd_elements.avatarLeft.animate(anim.a, anim.t);
+        anim = animations.titleLeft.exit;
+        avd_elements.titleLeft.animate(anim.a, anim.t);
+      }
+      if( avd_state.right ){
+        let anim = animations.avatarRight.exit;
+        avd_elements.avatarRight.animate(anim.a, anim.t);
+        anim = animations.titleRight.exit;
+        avd_elements.titleRight.animate(anim.a, anim.t);
+      }
+      if( avd_state.dialogDisplay){
+        let anim = animations.dialog.exit;
+        avd_elements.dialog.animate(anim.a, anim.t);
+        anim = animations.textBox.exit;
+        avd_elements.dialogContainer.animate(anim.a, anim.t);
+      }
+      avd_state = {
+        dialogDisplay: false,
+        left: null,
+        right: null,
+        scriptPointer: null,
+        script: null,
+        last: null
+      };
     }
   }
 
