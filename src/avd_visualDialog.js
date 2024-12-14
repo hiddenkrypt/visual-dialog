@@ -3,11 +3,8 @@ import {avd_tools} from "./avd_tools.js";
 Hooks.once('init', async function () {
   console.log('Visual Dialog | Initializing Visual Dialog');
   window.avd_VisualDialog = new VisualDialog();
-
-  function VisualDialog() {
-    let animations = avd_animations();
-    let tools = avd_tools();
-    let avd_state = {
+  function initialState(){
+    return {
       dialogDisplay: false,
       left: null,
       right: null,
@@ -36,6 +33,11 @@ Hooks.once('init', async function () {
         return "none";
       }
     } 
+  }
+  function VisualDialog() {
+    let animations = avd_animations();
+    let tools = avd_tools();
+    let avd_state = initialState();
     let avd_elements;
     let avd_container = document.createElement("div");
     avd_container.id = "avd_container";
@@ -76,11 +78,11 @@ Hooks.once('init', async function () {
       avd_state.scriptPointer = -1;
     }
     var step = this.step = function(){
-      if(avd_state.scriptPointer >= avd_state.script.length-1 ){
-        endDialog()
+      if( !avd_state.script ){
         return;
       }
-      if( !avd_state.script ){
+      if(avd_state.scriptPointer >= avd_state.script.length-1 ){
+        endDialog()
         return;
       }
       let line = avd_state.script[++avd_state.scriptPointer];
@@ -102,17 +104,17 @@ Hooks.once('init', async function () {
       var handlers = {
         "enter": function(line){
           enterCharacter(line.name, line.side, line.file, line.alias); 
-          step()
+          step();
         },
         "exit": function(line){
           exitCharacter(line.name); 
-          step()
+          step();
         },
         "fontname": function(line){
           console.log("set fontname: "+line.font);
           avd_state.find(line.name).fontname = line.font;
           setTitleFont(avd_state.side(line.name), line.font);
-          step()
+          step();
         },
         "fontspeech": function(line){
           avd_state.find(line.name).fontspeech = line.font;
@@ -274,20 +276,13 @@ Hooks.once('init', async function () {
         anim = animations.titleRight.exit;
         avd_elements.titleRight.animate(anim.a, anim.t);
       }
-      if( avd_state.dialogDisplay){
+      if( avd_state.dialogDisplay ){
         let anim = animations.dialog.exit;
         avd_elements.dialog.animate(anim.a, anim.t);
         anim = animations.textBox.exit;
         avd_elements.dialogContainer.animate(anim.a, anim.t);
       }
-      avd_state = {
-        dialogDisplay: false,
-        left: null,
-        right: null,
-        scriptPointer: null,
-        script: null,
-        last: null
-      };
+      avd_state = initialState();
     }
   }
 
