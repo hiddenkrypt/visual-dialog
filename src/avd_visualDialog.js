@@ -11,6 +11,7 @@ Hooks.once('init', async function () {
     let animations = avd_animations();
     let tools = avd_tools();
     let avd_state = {
+      dialogDisplay: false,
       left: null,
       right: null,
       scriptPointer: null,
@@ -55,7 +56,7 @@ Hooks.once('init', async function () {
     this.loadScript = function( txt ){
       avd_state.script = tools.tokenizeScript( txt );
       avd_state.scriptPointer = -1;
-      showDialog();
+      //showDialog();
     }
     var step = this.step = function(){
       if(avd_state.scriptPointer >= avd_state.script.length-1 ){
@@ -148,20 +149,24 @@ Hooks.once('init', async function () {
       } else if( side == "right" ) {
         anim = rightAvatarAnimations.show;
       }
-      enterAvatar.animate(anim.a, anim.t) 
+      enterAvatar.animate(anim.a, anim.t);
       if(side=="left"){
         anim = leftTitleAnimations.show
       } else if( side == "right" ) {
         anim = rightTitleAnimations.show;
       }
-      enterTitle.animate(anim.a, anim.t) 
+      enterTitle.animate(anim.a, anim.t);
       step()
     }
     function showDialog(){
+      avd_state.dialogDisplay = true;
       let anim = animations.textBox.show;
       avd_elements.dialogContainer.animate(anim.a, anim.t);
     }
     function sayDialog( side, dialogText ){
+      if( !avd_state.dialogDisplay ){
+        showDialog();
+      }
       let wrapL='“'
       let wrapR='”'
       if(side=="left"){
@@ -227,6 +232,7 @@ Hooks.once('init', async function () {
       step()
     };
     function endDialog(){
+      avd_state.dialogDisplay = false;
       let anim = animations.avatarLeft.exit;
       avd_elements.avatarLeft.animate(anim.a, anim.t);
       anim = animations.titleLeft.exit;
