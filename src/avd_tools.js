@@ -8,7 +8,6 @@ export function avd_tools() {
     var currentRoot = "";
     return txt.map(parseLine).filter(e=> e.type!= "skip");
     function parseLine(str){
-      console.log(str);
       str = str.trim()
       if(str == ""){
         return {type:"skip"}
@@ -18,6 +17,16 @@ export function avd_tools() {
         "#exit": e=>{ return {type:"exit", name: e.replace(/#exit: ?/, "").trim()} },
         "##": e=>{ return {type:"skip"} },
         "#pause": e=>{ return {type:"pause"} },
+        "#fontname": e=>{ 
+          let data = e.replace(/#fontname ?/, "").split(':');
+          let token = {type:"fontname", name: data[0].trim(), font: data[1].trim()}
+          return token;
+        },
+        "#fontspeech": e=>{ 
+          let data = e.replace(/#fontspeech ?/, "").split(':');
+          let token = {type:"fontspeech", name: data[0].trim(), font: data[1].trim()}
+          return token;
+        },
         "#enter": e=>{ 
           let data = e.replace(/#enter: ?/, "").split(/, ?/);
           let token = {type:"enter", name: data[0].trim(), side: side(data[1]), file:currentRoot+data[2].trim()}
@@ -37,7 +46,7 @@ export function avd_tools() {
       }
     
       for( let key in parsers ){
-        console.log(`\t${key}-${str.startsWith(key)}`);
+      //  console.log(`\t${key}-${str.startsWith(key)}`);
         if(str.startsWith(key)){
           return parsers[key](str);
         }

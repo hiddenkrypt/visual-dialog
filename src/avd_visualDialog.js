@@ -1,8 +1,5 @@
 import {avd_animations} from "./avd_animations.js";
 import {avd_tools} from "./avd_tools.js";
-
-
-
 Hooks.once('init', async function () {
   console.log('Visual Dialog | Initializing Visual Dialog');
   window.avd_VisualDialog = new VisualDialog();
@@ -16,15 +13,35 @@ Hooks.once('init', async function () {
       right: null,
       scriptPointer: null,
       script: null,
-      last: null
-    }
+      last: null,
+      narrator: {font:"caviar_dreams , sans-serif"},
+      find: function(name){
+        if(this.left.name == name || this.left.alias == name){
+          return this.left;
+        }
+        if(this.right.name == name || this.right.alias == name){
+          return this.right;
+        }
+        if( name == narrator ){
+          return this.narrator;
+        }
+        return {error:true};
+      },
+      side: function(name){
+        if(this.find(name) == this.left){
+          return "left";
+        } else if(this.find(name) == this.right){
+          return "right";
+        }
+        return "none";
+      }
+    } 
     let avd_elements;
     let avd_container = document.createElement("div");
     avd_container.id = "avd_container";
     avd_setup();
     
     function avd_setup(){
-      
       for (let [e,v] in avd_elements){
         v.parentNode.removeChild(v);
       }
@@ -53,10 +70,10 @@ Hooks.once('init', async function () {
       document.body.appendChild(avd_container);
     }
     
+    
     this.loadScript = function( txt ){
       avd_state.script = tools.tokenizeScript( txt );
       avd_state.scriptPointer = -1;
-      //showDialog();
     }
     var step = this.step = function(){
       if(avd_state.scriptPointer >= avd_state.script.length-1 ){
@@ -68,9 +85,6 @@ Hooks.once('init', async function () {
       }
       let line = avd_state.script[++avd_state.scriptPointer];
       readLine(line);
-      if(line.type == "skip" || line.type == "alias"){
-        step();
-      }
       
     };
     this.unstep = function(){
@@ -88,29 +102,34 @@ Hooks.once('init', async function () {
       var handlers = {
         "enter": function(line){
           enterCharacter(line.name, line.side, line.file, line.alias); 
+          step()
         },
         "exit": function(line){
           exitCharacter(line.name); 
+          step()
+        },
+        "fontname": function(line){
+          console.log("set fontname: "+line.font);
+          avd_state.find(line.name).fontname = line.font;
+          setTitleFont(avd_state.side(line.name), line.font);
+          step()
+        },
+        "fontspeech": function(line){
+          avd_state.find(line.name).fontspeech = line.font;
         },
         "pause": ()=>{},
+        "skip": ()=>{
+          step()
+        },
         "alias": function(line){
-          if( avd_state.left && avd_state.left.name == line.name ){
-            avd_state.left.alias = line.alias;
-          }
-          else if( avd_state.right && avd_state.right.name == line.name ){
-            avd_state.right.alias = line.alias;
-          }
+          avd_state.find(line.name).alias = line.alias;
+          step()
         },
         "narration": function(line){
-            sayDialog( "narrator", line.line );
+          sayDialog( "narrator", line.line );
         },
         "speech": function( line ){
-          if( avd_state.left && avd_state.left.alias == line.name ){
-            sayDialog( "left", line.line );
-          }
-          else if( avd_state.right && avd_state.right.alias == line.name ){
-            sayDialog( "right", line.line );
-          }
+          sayDialog( avd_state.side(line.name) , line.line );
         },
         "end": endDialog
       }
@@ -126,6 +145,14 @@ Hooks.once('init', async function () {
       }
     }
     
+    function setTitleFont(side, font){
+      if(side=="left"){
+        avd_elements.titleLeft.style.fontFamily = font;
+      }
+      if(side=="right"){
+        avd_elements.titleRight.style.fontFamily = font;
+      }
+    }
     
     function enterCharacter( characterName, side, characterImage, alias ){
       avd_state[side] = {
@@ -157,7 +184,6 @@ Hooks.once('init', async function () {
         anim = rightTitleAnimations.show;
       }
       enterTitle.animate(anim.a, anim.t);
-      step()
     }
     function showDialog(){
       avd_state.dialogDisplay = true;
@@ -165,12 +191,14 @@ Hooks.once('init', async function () {
       avd_elements.dialogContainer.animate(anim.a, anim.t);
     }
     function sayDialog( side, dialogText ){
+      console.log("say:-"+side);
       if( !avd_state.dialogDisplay ){
         showDialog();
       }
       let wrapL='“'
       let wrapR='”'
       if(side=="left"){
+        if(avd_state.left.font){avd_elements.dialog.style.fontFamily = avd_state.left.font;}
         avd_elements.dialog.style.backgroundcolor = "rgba(0,0,0,.6)";
         avd_elements.dialog.style.fontSize = "1.9vw";
         avd_elements.dialog.style.textAlign = "left";
@@ -185,6 +213,7 @@ Hooks.once('init', async function () {
         avd_elements.dialog.animate(anim.a, anim.t);
       }
       if(side=="right"){
+        if(avd_state.right.font){avd_elements.dialog.style.fontFamily = avd_state.right.font;}
         avd_elements.dialog.style.backgroundcolor = "rgba(0,0,0,.6)";
         avd_elements.dialog.style.fontSize = "1.9vw";
         avd_elements.dialog.style.textAlign = "right";
@@ -199,6 +228,7 @@ Hooks.once('init', async function () {
         avd_elements.dialog.animate(anim.a, anim.t);
       }
       if(side=="narrator"){
+        if(avd_state.narrator.font){avd_elements.dialog.style.fontFamily = avd_state.narrator.font;}
         avd_elements.dialog.style.backgroundcolor = "rgba(0,0,0,.9)";
         avd_elements.dialog.style.fontSize = "1.6vw";
         avd_elements.dialog.style.textAlign = "center";
@@ -230,7 +260,6 @@ Hooks.once('init', async function () {
         anim = vd_animations.titleRight.exit;
         avd_elements.titleRight.animate(anim.a, anim.t);
       }       
-      step()
     };
     function endDialog(){
       if( avd_state.left ){
