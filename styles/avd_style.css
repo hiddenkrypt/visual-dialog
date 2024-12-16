@@ -36,10 +36,12 @@ div{ color:#fff}
 #titleLeft{
   left: 20%;
   rotate: -8deg;
+  text-align:center;
 }
 #titleRight{
   left: 50%;
   rotate: 8deg;
+  text-align:center;
 }
 #titleLeft, #titleRight{
   font-family: Georgia, serif;
